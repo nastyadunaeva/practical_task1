@@ -21,6 +21,7 @@ public class Program {
 			players.updateZeros();
 			int max = 0;
 			int max_winner = 1;
+			boolean winnerNotFound = true;
 			for (int j = players.lastWinner; j < players.lastWinner + players.players; j++) {
 				int i = 0;
 				if (j <= players.players) {
@@ -34,15 +35,22 @@ public class Program {
 				if (sum > max) {
 					max = sum;
 					max_winner = i;
+					winnerNotFound = false;
+				} else if (sum == max) {
+					winnerNotFound = true;
 				}
 			}
-			players.lastWinner = max_winner;
-			players.wins[max_winner-1]++;
-			System.out.println(">Player " + max_winner + " won");
+			if (winnerNotFound == true) {
+				System.out.println(">No one won");
+			} else {
+				players.lastWinner = max_winner;
+				players.wins[max_winner-1]++;
+				System.out.println(">Player " + max_winner + " won");
+			}
 			System.out.println();
 			
 		}
-		System.out.println("Player " + players.lastWinner + " won the game!");
+		System.out.println("Player " + players.isSomeoneWins() + " won the game!");
 		in.close();
 	}
 }
